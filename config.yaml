@@ -1,0 +1,24 @@
+columns: 
+  - Project
+  - Description
+  - Time
+  - Rate
+  - Total
+
+format-description: "%s"
+format-annotation: "*%s*"
+copy: true
+
+_columns:
+  - ID
+  - St
+  - Age
+  - Time
+  - P
+  - Project
+  - Tags
+  - Due
+  - Description
+  - Rate
+  - Total
+  - Urg

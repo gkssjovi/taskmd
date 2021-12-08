@@ -1,0 +1,12 @@
+{
+    "columns": [
+        "Project",
+        "Description",
+        "Time",
+        "Rate",
+        "Total"
+    ],
+    "format-description": "**%s**",
+    "format-annotation": "*%s*",
+    "copy": true
+}

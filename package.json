@@ -1,0 +1,13 @@
+{
+  "name": "taskmd",
+  "version": "1.0.0",
+  "description": "Export taskwarrior to markdown",
+  "main": "src/main.js",
+  "author": "Ovidiu Cimpean",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.29.1",
+    "yaml": "^1.10.2",
+    "yargs": "^17.3.0"
+  }
+}
