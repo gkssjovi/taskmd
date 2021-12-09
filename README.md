@@ -39,7 +39,7 @@ taskmd project:Inbox status:pending --format-annotation='*%s*' --format-descript
 
 # Output
 
-```sh
+```
 | ID | St      | Age | Time    | P | Project | Tags | Due | Description                                                                      | Urg      |
 |----|---------|-----|---------|---|---------|------|-----|----------------------------------------------------------------------------------|----------|
 | 3  | pending | 7d  | 1:35:46 | L | Inbox   | tag  |     | Support / Other related work                                                     | -13.0616 |
