@@ -56,7 +56,7 @@ const main = async () => {
     let columns = (typeof options.columns !== 'undefined' ? options.columns.split(',') : []);
     
     // Load the defualt values
-    if (typeof options.columns === 'undefined' && config('columns')) {
+    if (typeof options.columns === 'undefined' && config.get('columns')) {
         columns = config.get('columns');
     }
 
