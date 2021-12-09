@@ -25,7 +25,7 @@ const FILTER_COLUMNS = 0x1;
 
 class Table {
     constructor(rawRows) {
-        this.annotationPrefix = ' • ';
+        this.annotationPrefix = config.get('annotation-prefix', ' • ');
         this._rawRows = rawRows;
         this.headerTemplate = this._getHeaderTemplate();
         this.header = Object.values(this.headerTemplate);
@@ -346,8 +346,9 @@ class Table {
     
     _applyFormatAnnotation(str) {
         if (typeof options.formatAnnotation === 'undefined') {
-            if (Object.prototype.hasOwnProperty.call(config, 'format-annotation')) {
-                return config['format-annotation'].replace(/%s/mig,  str);
+            const fa = config.get('format-annotation');
+            if (fa) {
+                return fa.replace(/%s/mig,  str);
             }
             return str;
         }
@@ -357,8 +358,9 @@ class Table {
 
     _applyFormatDescription(str) {
         if (typeof options.formatDescription === 'undefined') {
-            if (Object.prototype.hasOwnProperty.call(config, 'format-description')) {
-                return config['format-description'].replace(/%s/mig,  str);
+            const fd = config.get('format-description');
+            if (fd) {
+                return fd.replace(/%s/mig,  str);
             }
             return str;
         }

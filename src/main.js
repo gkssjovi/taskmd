@@ -38,8 +38,7 @@ const copy = (data) => {
 
 const main = async () => {
     const args = options._;
-    const copyOutput = typeof options.copy !== 'undefined' ? options.copy :
-        (typeof config.copy !== 'undefined' ? config.copy : true);
+    const copyOutput = typeof options.copy !== 'undefined' ? options.copy : config.get('copy', true);
 
     const response = await call('task', [...args, 'export'], true);
     let tasks = [];
@@ -57,8 +56,8 @@ const main = async () => {
     let columns = (typeof options.columns !== 'undefined' ? options.columns.split(',') : []);
     
     // Load the defualt values
-    if (typeof options.columns === 'undefined' && Object.prototype.hasOwnProperty.call(config, 'columns')) {
-        columns = config.columns;
+    if (typeof options.columns === 'undefined' && config('columns')) {
+        columns = config.get('columns');
     }
 
     columns = columns.filter(column => header.includes(column.toLowerCase()));

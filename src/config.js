@@ -14,15 +14,26 @@ const filename = USE_YAML ? CONFIG_YAML : CONFIG_JSON;
 
 const configPath = path.join(os.homedir(), `/.config/taskmd/${filename}`);
 
-let config = {};
+let data = {};
 if (fs.existsSync(configPath)) {
     const read = fs.readFileSync(configPath, 'utf-8');
 
     if (USE_YAML) {
-        config = YAML.parse(read);
+        data = YAML.parse(read);
     } else {
-        config = JSON.parse(read);
+        data = JSON.parse(read);
     }
 }
 
-module.exports = config;
+const config = (option, defaultValue = undefined) => {
+    if (typeof data[option] !== 'undefined') {
+        return data[option];
+    }
+    
+    return defaultValue;
+}
+
+module.exports = {
+    get: config,
+    data,
+};
