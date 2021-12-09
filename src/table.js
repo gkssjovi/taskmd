@@ -2,7 +2,7 @@ const Size = require("./size");
 const moment = require('moment');
 const options = require("./options");
 const config = require("./config");
-const { truncate } = require("./helpers");
+const { truncate, chunk } = require("./helpers");
 moment.updateLocale('en', {
     relativeTime : {
         future: 'in %s',
@@ -152,6 +152,7 @@ class Table {
                     
                     if (index === descriptionColumnIndex) {
                         const initalValue = `${description}`;
+
                         const value = this._applyFormatAnnotation(initalValue);
                         const formatAnnotationLength = config.get('format-annotation', '').replace(/%s/, '').length;
                         this._print(`| ${this.annotationPrefix}${value} `);
@@ -279,10 +280,15 @@ class Table {
                 for (let index = 0; index < annotations.length; index++) {
                     const annotation = annotations[index];
                     const {entry, description} = annotation;
-
+                    
+                    // this if I want to chunk the description
+                    // const maxLen = 50;
+                    // const chuncks = description.length > maxLen ? chunk(description, maxLen) : [description];
+                    
                     result.push({
                         entry,
                         description,
+                        // description: desc,
                         // description: truncate(description, 150),
                     });
                 }
@@ -348,8 +354,18 @@ class Table {
     }
     
     _updateAnnotationSize(index, entry, description) {
-        const spacer = ' '.repeat(this.annotationPrefix.length);
-        return this.size.update(index, this._applyFormatAnnotation(`${spacer}${String(description)}`));
+        const spacer= ' '.repeat(this.annotationPrefix.length);
+        let desc;
+        
+        if (typeof description === 'string') {
+            desc = description;
+        } else {
+            // this if I want to chunk the description
+            const maxLen = Math.max(...description.map(desc => desc.length));
+            desc = ' '.repeat(maxLen);
+        }
+        
+        return this.size.update(index, this._applyFormatAnnotation(`${spacer}${String(desc)}`));
     }
     
     _applyFormatAnnotation(str) {
