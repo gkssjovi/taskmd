@@ -2,6 +2,7 @@ const Size = require("./size");
 const moment = require('moment');
 const options = require("./options");
 const config = require("./config");
+const { truncate } = require("./helpers");
 moment.updateLocale('en', {
     relativeTime : {
         future: 'in %s',
@@ -130,7 +131,7 @@ class Table {
         this.output += value;
     }
     
-    _renderRowAnnotation(rowIndex) {
+    _renderRowAnnotation(rowIndex, row) {
         const size = this.size.export();
         const annotations = this._getAnnotations(rowIndex);
         
@@ -167,6 +168,26 @@ class Table {
         }
     }
     
+    _renderHeaderBreak(rowIndex, row) {
+        const size = this.size.export();
+
+        if (rowIndex == -1) {
+            for (let index = 0; index < size.length; index++) {
+                const len = size[index];
+                const value =  row[index];
+
+                if (this.filterColumnsIndex.length > 0 && !this.filterColumnsIndex.includes(index)) {
+                    continue ;
+                }
+            
+                this._print(`|--`);
+                this._print('-'.repeat(len));
+            }
+            this._print('|');
+            this._print('\n');
+        }
+    }
+    
     _renderRow(rowIndex, row) {
         const size = this.size.export();
         const descriptionColumnIndex = this._getColumnInex(this.headerTemplate.description);
@@ -188,23 +209,9 @@ class Table {
         this._print('|');
         this._print('\n');
         
-        this._renderRowAnnotation(rowIndex);
+        this._renderRowAnnotation(rowIndex, row);
+        this._renderHeaderBreak(rowIndex, row);
         
-        if (rowIndex == -1) {
-            for (let index = 0; index < size.length; index++) {
-                const len = size[index];
-                const value =  row[index];
-
-                if (this.filterColumnsIndex.length > 0 && !this.filterColumnsIndex.includes(index)) {
-                    continue ;
-                }
-            
-                this._print(`|--`);
-                this._print('-'.repeat(len));
-            }
-            this._print('|');
-            this._print('\n');
-        }
     }
     
     render() {
@@ -276,6 +283,7 @@ class Table {
                     result.push({
                         entry,
                         description,
+                        // description: truncate(description, 50),
                     });
                 }
             }
