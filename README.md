@@ -18,7 +18,8 @@ If you want to use a config file
 ```sh
 mkdir ~/.config/taskmd/
 
-ln -s $PWD/config.yaml ~/.config/taskmd/config.yaml 
+cp config.yaml  personal.config.yaml
+ln -s $PWD/personal.config.yaml ~/.config/taskmd/config.yaml 
 ```
 
 # Usage
