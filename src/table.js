@@ -153,9 +153,9 @@ class Table {
                     if (index === descriptionColumnIndex) {
                         const initalValue = `${description}`;
                         const value = this._applyFormatAnnotation(initalValue);
-                        const diff = value - initalValue;
+                        const formatAnnotationLength = config.get('format-annotation', '').replace(/%s/, '').length;
                         this._print(`| ${this.annotationPrefix}${value} `);
-                        this._print(' '.repeat(len - description.length - this.annotationPrefix.length - diff));
+                        this._print(' '.repeat(len - description.length - this.annotationPrefix.length - formatAnnotationLength));
                     } else {
                         this._print(`|  `);
                         this._print(' '.repeat(len));
@@ -283,7 +283,7 @@ class Table {
                     result.push({
                         entry,
                         description,
-                        // description: truncate(description, 50),
+                        description: truncate(description, 50),
                     });
                 }
             }
