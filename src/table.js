@@ -283,7 +283,7 @@ class Table {
                     result.push({
                         entry,
                         description,
-                        description: truncate(description, 50),
+                        // description: truncate(description, 50),
                     });
                 }
             }
